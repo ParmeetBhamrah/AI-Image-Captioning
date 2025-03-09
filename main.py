@@ -1,5 +1,5 @@
 from PyQt6.QtWidgets import (
-    QApplication, QWidget, QLabel, QVBoxLayout, QPushButton, QFileDialog, QLineEdit
+    QApplication, QWidget, QLabel, QVBoxLayout, QPushButton, QFileDialog, QLineEdit, QFrame, QTextEdit
 )
 from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import Qt, QThread, pyqtSignal
@@ -74,12 +74,26 @@ class ImageCaptionApp(QWidget):
         self.generate_button.setEnabled(False)
         self.generate_button.clicked.connect(self.start_caption_generation)
 
+        self.caption_frame = QFrame(self)
+        self.caption_frame.setFrameShape(QFrame.Shape.Box)
+        self.caption_frame.setLineWidth(2)
+        self.caption_frame.setStyleSheet("padding: 10px;")
+
+        self.caption_text_edit = QTextEdit(self.caption_frame)
+        self.caption_text_edit.setReadOnly(True)
+        self.caption_text_edit.setPlainText("Caption will appear here.")
+        self.caption_text_edit.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
         layout = QVBoxLayout()
         layout.addWidget(self.image_label)
         layout.addWidget(self.label)
         layout.addWidget(self.description_input)
         layout.addWidget(self.upload_button)
         layout.addWidget(self.generate_button)
+        layout.addWidget(self.caption_frame)
+
+        self.caption_frame.setLayout(QVBoxLayout())
+        self.caption_frame.layout().addWidget(self.caption_text_edit)
 
         self.setLayout(layout)
 
@@ -109,7 +123,8 @@ class ImageCaptionApp(QWidget):
         self.thread.start()
 
     def display_caption(self, caption):
-        self.label.setText(f"Caption: {caption}")
+        self.caption_text_edit.setPlainText(caption)
+        self.label.setText("Caption generated!")
         self.generate_button.setEnabled(True)
 
 app = QApplication(sys.argv)
