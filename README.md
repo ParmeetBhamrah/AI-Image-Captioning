@@ -1,5 +1,7 @@
 # AI Image Captioning Tool
 
+![Python](https://img.shields.io/badge/Python-3.9%2B-blue)  ![PyQt6](https://img.shields.io/badge/PyQt6-GUI-orange)  ![Offline](https://img.shields.io/badge/Offline-Supported-green)  
+
 ## Overview
 
 The **AI Image Captioning Tool** is a desktop application built with PyQt6 that allows users to upload images and generate AI-powered captions. The tool leverages a locally hosted **LLaVA-Phi3** model via Ollama to generate creative and Instagram-friendly captions.
